@@ -1,39 +1,70 @@
+const table = document.getElementById("bookTable");
+let books = [];
 
 document.getElementById("submitForm").addEventListener("click", function(event){
-    event.preventDefault()
+    event.preventDefault();
     addBooktoLibrary();
-
     const bookName = document.getElementById("bookName");
     const authorName = document.getElementById("authorName");
     const numOfPages = document.getElementById("bookPages");
     bookName.value = "";
     authorName.value = "";
     numOfPages.value = "";
+
   });
 
-let books = [];
+function Book() {
+        this.title = document.getElementById("bookName").value;
+        this.author = document.getElementById("authorName").value;
+        this.pages = document.getElementById("bookPages").value;
+}
 
-function Book(title,author,pages){
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
+function bookCard(bookArray){
+    const cards = document.querySelector('.cards');
+    const countTracker = document.querySelector('.count');
+
+    const newCard = document.createElement('div');
+    newCard.className = "newCard"
+
+    const bookHeader = document.createElement('h4');
+    const authorHeader = document.createElement('h4');
+    const pageHeader = document.createElement('h4');
+    
+    let count = 0;
+
+    for(let book of bookArray){
+        bookHeader.textContent = ` Book Title: ${book.title}`;
+        authorHeader.textContent = ` Author: ${book.author}`;
+        pageHeader.textContent = ` Pages: ${book.pages}`;
+
+        count ++;
+    }
+
+    countTracker.textContent = count;
+
+    cards.appendChild(newCard);
+    newCard.appendChild(bookHeader);
+    newCard.appendChild(authorHeader);
+    newCard.appendChild(pageHeader);
 }
 
 function addBooktoLibrary(){
-
-    let newTitle = document.getElementById("bookName").value;
-    let newAuthor = document.getElementById("authorName").value;
-    let newPages = document.getElementById("bookPages").value;
-
-    if(newTitle == "" || newAuthor =="" || newPages == ""){
-        console.log("Please Enter");
-    }
-    else{
-    let newBook = new Book(newTitle,newAuthor,newPages);
+    let newBook = new Book();
 
     books.push(newBook);
 
-    console.log(books);}
+    bookCard(books);
+
+    console.log(books);
 }
+
+
+
+
+
+
+
+
+
 
 
