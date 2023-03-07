@@ -1,4 +1,4 @@
-const table = document.getElementById("bookTable");
+
 let books = [];
 
 document.getElementById("submitForm").addEventListener("click", function(event){
@@ -21,7 +21,6 @@ function Book() {
 
 function bookCard(bookArray){
     const cards = document.querySelector('.cards');
-    const countTracker = document.querySelector('.count');
 
     const newCard = document.createElement('div');
     newCard.className = "newCard"
@@ -29,23 +28,27 @@ function bookCard(bookArray){
     const bookHeader = document.createElement('h4');
     const authorHeader = document.createElement('h4');
     const pageHeader = document.createElement('h4');
-    
-    let count = 0;
+
+    const newButton = document.createElement('button');
+    newButton.className = "removeButton";
+
 
     for(let book of bookArray){
         bookHeader.textContent = ` Book Title: ${book.title}`;
         authorHeader.textContent = ` Author: ${book.author}`;
         pageHeader.textContent = ` Pages: ${book.pages}`;
-
-        count ++;
+        newButton.textContent = 'Remove';
     }
-
-    countTracker.textContent = count;
 
     cards.appendChild(newCard);
     newCard.appendChild(bookHeader);
     newCard.appendChild(authorHeader);
     newCard.appendChild(pageHeader);
+    newCard.appendChild(newButton);
+
+    newButton.onclick = (e) =>{
+        e.removeBook(this);
+    }
 }
 
 function addBooktoLibrary(){
@@ -55,10 +58,22 @@ function addBooktoLibrary(){
 
     bookCard(books);
 
+    bookCount();
+
     console.log(books);
 }
 
+function removeBook(book){
+    book.parentNode.remove();
+}
 
+function bookCount(){
+    const countTracker = document.querySelector('.count');
+
+    countTracker.textContent = books.length;
+
+    return countTracker;
+}
 
 
 
